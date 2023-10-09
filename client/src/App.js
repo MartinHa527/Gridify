@@ -69,9 +69,7 @@ function App() {
           <StyledLogoutButton onClick={logout}>Log Out </StyledLogoutButton>
           <Router>
           <ScrollToTop />
-
           <Switch>
-          
             <Route path="/">
                 <Grid />
             </Route>
