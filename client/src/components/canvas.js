@@ -122,10 +122,24 @@ function SpotifyImage(props) {
             const startY = 570*2;
             const gap = 13*2;
             let albumLength = 0;
-            if (topTracks.length >1) {
+            function truncateToFit(ctx, text, maxWidth) {
+                let ellipsis = '...';
+                let truncatedText = text;
+            
+                while (ctx.measureText(truncatedText + ellipsis).width > maxWidth && truncatedText.length > 0) {
+                    truncatedText = truncatedText.substring(0, truncatedText.length - 1);
+                }
+                
+                return truncatedText + (truncatedText.length < text.length ? ellipsis : '');
+            }
+            if (topTracks.length > 1) {
                 ctx.fillStyle = "black";
                 topTracks.slice(0, 10).forEach((item, index) => {
-                    const listItem = `${index + 1}. ${item.name}`;  // Prepend the number to each song name
+                    let listItem = `${index + 1}. ${item.name}`;  // Prepend the number to each song name
+            
+                    // Adjust the listItem to fit within the boundary
+                    listItem = truncateToFit(ctx, listItem, 450 - 60);
+                    
                     ctx.fillText(listItem, 60, startY + (index * gap));
                     albumLength += item.duration_ms;
                 });
@@ -135,7 +149,8 @@ function SpotifyImage(props) {
             if (topTracks.length >1) {
                 ctx.fillStyle = "black";
                 topTracks.slice(10,20).forEach((item,index) => {
-                    const listItem = `${index + 11}. ${item.name}`;
+                    let listItem = `${index + 11}. ${item.name}`;
+                    listItem = truncateToFit(ctx,listItem,450)
                     ctx.fillText(listItem, 2*230, startY + (index *gap));
                     albumLength += item.duration_ms;
 

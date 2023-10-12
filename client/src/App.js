@@ -73,7 +73,6 @@ function App() {
             <Route path="/">
                 <Grid />
             </Route>
-            
           </Switch>
         </Router>
         </>
